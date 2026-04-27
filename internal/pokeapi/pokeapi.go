@@ -1,3 +1,3 @@
 package pokeapi
 
-const apiURL = "https://pokeapi.co/api/v2/location-area/"
+const baseURL = "https://pokeapi.co/api/v2"

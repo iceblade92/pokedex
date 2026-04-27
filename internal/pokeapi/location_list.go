@@ -7,7 +7,7 @@ import (
 )
 
 func (c *Client) FetchLocations(pageURL *string) (LocationAreaResp, error) {
-	url := apiURL
+	url := baseURL + "/location-area/"
 	var resp LocationAreaResp
 
 	if pageURL != nil {

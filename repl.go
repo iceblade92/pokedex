@@ -27,9 +27,14 @@ func Repl(cfg *Config) {
 			fmt.Println("No text prompt provided")
 			continue
 		}
+		args := []string{}
+		if len(str) > 1 {
+			args = str[1:]
+		}
+
 		command, exists := getCommands()[str[0]]
 		if exists {
-			err := command.callback(cfg)
+			err := command.callback(cfg, args...)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -42,7 +47,7 @@ func Repl(cfg *Config) {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Config) error
+	callback    func(*Config, ...string) error
 }
 
 func cleanInput(text string) []string {
@@ -74,6 +79,11 @@ func getCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "Map back shows previous 20 locations",
 			callback:    commandMapb,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Shows presant pokemon in local area",
+			callback:    commandExplore,
 		},
 	}
 	return command
