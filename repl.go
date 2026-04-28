@@ -13,6 +13,7 @@ type Config struct {
 	pokeapiClient *pokeapi.Client
 	Next          string
 	Previous      string
+	caughtPokemon map[string]pokeapi.Pokemon
 }
 
 func Repl(cfg *Config) {
@@ -84,6 +85,16 @@ func getCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "Shows presant pokemon in local area",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Throw a pokeball to catch named pokemon",
+			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "Inspect pokemon stats and types",
+			callback:    commandInspect,
 		},
 	}
 	return command

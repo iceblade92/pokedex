@@ -6,25 +6,25 @@ import (
 	"net/http"
 )
 
-func (c *Client) GetLocation(name string) (LocationArea, error) {
-	url := baseURL + "/location-area/" + name
-	var resp LocationArea
+func (c *Client) GetPokemon(name string) (Pokemon, error) {
+	url := baseURL + "/pokemon/" + name
+	var resp Pokemon
 	if val, ok := c.cache.Get(url); ok {
 		err := json.Unmarshal(val, &resp)
 		if err != nil {
-			return LocationArea{}, err
+			return Pokemon{}, err
 		}
 		return resp, nil
 
 	}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return LocationArea{}, err
+		return Pokemon{}, err
 	}
 
 	res, err := c.httpClient.Do(req)
 	if err != nil {
-		return LocationArea{}, err
+		return Pokemon{}, err
 	}
 
 	defer res.Body.Close()
@@ -41,5 +41,4 @@ func (c *Client) GetLocation(name string) (LocationArea, error) {
 	c.cache.Add(url, body)
 
 	return resp, nil
-
 }
