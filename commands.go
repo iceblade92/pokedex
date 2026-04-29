@@ -60,6 +60,7 @@ func commandCatch(cfg *Config, args ...string) error {
 	if chance > pokemon.BaseExperience {
 		fmt.Printf("%s was caught!\n", pokemon.Name)
 		cfg.caughtPokemon[pokemon.Name] = pokemon
+		fmt.Println("You may now inspect it with the inspect command.")
 	} else {
 		fmt.Printf("%s escaped!\n", pokemon.Name)
 	}
@@ -88,6 +89,18 @@ func commandInspect(cfg *Config, args ...string) error {
 	fmt.Println("Types:")
 	for _, element := range pokemon.Types {
 		fmt.Printf("  - %s\n", element.Type.Name)
+	}
+	return nil
+}
+
+func commandPokedex(cfg *Config, args ...string) error {
+	if len(cfg.caughtPokemon) < 1 {
+		fmt.Println("You have no pokemon try catching first!")
+		return nil
+	}
+	fmt.Printf("Your Pokedex:\n")
+	for _, pokemon := range cfg.caughtPokemon {
+		fmt.Printf(" - %s\n", pokemon.Name)
 	}
 	return nil
 }
